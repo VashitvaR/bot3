@@ -26,9 +26,14 @@ qa_data = {
 
 
 
+
+
 def display_questions(questions):
+    selected_indices = []
     for i, question in enumerate(questions, start=1):
-        st.checkbox(f"{i}. {question}")
+        if st.checkbox(f"{i}. {question}"):
+            selected_indices.append(i)
+    return selected_indices
 
 def main():
     all_questions = list(qa_data.keys())
@@ -37,11 +42,8 @@ def main():
     random_questions = random.sample(all_questions, 5)
 
     st.title("Select Questions to Display")
-    display_questions(random_questions)
+    selected_indices = display_questions(random_questions)
 
-    # Get user input for marked questions using checkboxes
-    selected_indices = [index for index, question in enumerate(random_questions, start=1) if st.checkbox(f"{index}. {question}")]
-    
     # Display the selected questions and their answers
     for index in selected_indices:
         selected_question = random_questions[index - 1]
