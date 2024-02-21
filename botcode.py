@@ -224,8 +224,7 @@ def chat_bow(question):
     cv_ = cv.transform([tidy_question]).toarray()
     cos = 1 - pairwise_distances(df_bow, cv_, metric='cosine')
     index_value = cos.argmax()
-    if cos[0, index_value] < 0.5:
-        return None
+    
     return df_nayak['answer'].loc[index_value]
 
 # TF-IDF
@@ -240,8 +239,7 @@ def chat_tfidf(question):
     tf = tfidf.transform([tidy_question]).toarray()
     cos = 1 - pairwise_distances(df_tfidf, tf, metric='cosine')
     index_value = cos.argmax()
-    if cos[0, index_value] < 0.5:
-        return None
+    
     return df_nayak['answer'].loc[index_value]
 
 # Streamlit App
