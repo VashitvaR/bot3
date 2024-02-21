@@ -1,10 +1,6 @@
-
-numpy==1.21.2
-pandas==1.3.3
-
-streamlit==1.8.0
+streamlit==1.5.3
 pandas==1.3.3
 scikit-learn==0.24.2
-
 deep-translator==1.5.4
 langdetect==1.0.9
+
