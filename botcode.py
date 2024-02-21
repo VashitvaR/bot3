@@ -179,7 +179,7 @@ updated_data = data + additional_data
 # Update df_nayak with the new dataset
 df_nayak = pd.DataFrame(updated_data)
 
-df_nayak = pd.DataFrame(data)
+
 # Load the BERT model and tokenizer
 with st.sidebar:
     st.markdown('<h1 style="color:blue;">🛡️ Welcome to Shield Bot by Nayak! 🤖</h1>', unsafe_allow_html=True)
