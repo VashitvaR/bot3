@@ -150,8 +150,60 @@ data=[
     "answer": "Nayak encourages users to report potential security vulnerabilities. A dedicated security team reviews reports, and a responsible disclosure program is in place to ensure the prompt resolution of identified vulnerabilities"
   }
 ]
+additional_data = [
+    {
+        "question": "Hello",
+        "answer": "Hello! How can Nayak assist you today?"
+    },
+    {
+        "question": "Hi",
+        "answer": "Hi there! How can Nayak help you?"
+    },
+    {
+        "question": "Good morning",
+        "answer": "Good morning! What can Nayak do for you today?"
+    },
+    {
+        "question": "Goodbye",
+        "answer": "Goodbye! If you have more questions, feel free to return anytime."
+    },
+    {
+        "question": "Bye",
+        "answer": "Bye! If there's anything else you'd like to know, don't hesitate to ask."
+    },
+]
+
+# Combine existing data with additional data
+updated_data = data + additional_data
+
+# Update df_nayak with the new dataset
+df_nayak = pd.DataFrame(updated_data)
 
 df_nayak = pd.DataFrame(data)
+# Load the BERT model and tokenizer
+with st.sidebar:
+    st.markdown('<h1 style="color:blue;">🛡️ Welcome to Shield Bot by Nayak! 🤖</h1>', unsafe_allow_html=True)
+    st.header('About Nayak')
+
+    st.markdown('''
+    ## Empowering Reporting and Insights
+
+    Nayak is a cutting-edge reporting and insights platform designed to empower individuals, particularly victims, to file reports openly or anonymously. The platform is committed to user convenience and offers morning and night modes.
+
+    🚀 Once a report is submitted, Nayak provides authorized authorities with a comprehensive dashboard. Reports are intelligently categorized into open, in-progress, and closed statuses, ensuring efficient case management.
+
+    ### AI-Powered Efficiency
+    - Nayak seamlessly integrates AI to manage the influx of reports effectively.
+    - The AI is adept at generating precise answers to specific questions posed by authorities, streamlining the information processing workflow.
+
+    ### API Gateway for Data Insights
+    - Nayak offers an API gateway, allowing authorities to access valuable data stored within the platform's databases.
+    - Authorized external parties can retrieve pertinent information through the API, contributing to insights generation.
+    
+
+    💡 Note: The  Bot is an integral component of Nayak, augmenting the platform's capabilities and enhancing user experience.
+    ''')
+st.markdown('<style>div.stNamedPlaceholder>div{margin-top:20px;}</style>', unsafe_allow_html=True)
 
 # Bag of Words (BOW)
 cv = CountVectorizer()
