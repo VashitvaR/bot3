@@ -28,28 +28,21 @@ data = {
 
 
 
-selected_indices = []
-for i, question in enumerate(data, start=1):
-        st.write(f"{i}. {question}")
-        checkbox_value = st.checkbox(f"Select this question")
+def main():
+    all_questions = list(data.keys())
+    random.shuffle(all_questions)
+
+    st.title("Select Questions to Display")
+
+    selected_indices = []
+    for i, question in enumerate(all_questions, start=1):
+        checkbox_value = st.checkbox(f"Select this question {i}")
         if checkbox_value:
             selected_indices.append(i)
 
-def main():
-    all_questions = list(qa_data.keys())
-    
-    # Randomly shuffle all questions
-    random.shuffle(all_questions)
-
-    # Select the first 5 questions for the user to choose from
-    random_questions = all_questions[:5]
-
-    st.title("Select Questions to Display")
-    selected_indices = display_questions(random_questions)
-
     # Display the selected questions and their answers
     for index in selected_indices:
-        selected_question = random_questions[index - 1]
+        selected_question = all_questions[index - 1]
         st.write("\nQuestion:", selected_question)
         st.write("Answer:", qa_data[selected_question])
 
