@@ -1,7 +1,7 @@
 import streamlit as st
 import random
 
-qa_data = {
+data = {
     "How is Nayak always looking to improve and enhance its features?": "Nayak is always looking for ways to improve and enhance its features. If you have any suggestions or specific areas you'd like to see improvements, feel free to share them with us!",
     "What is Nayak's approach to addressing societal challenges?": "Nayak integrates artificial intelligence to contribute to its effectiveness in addressing societal challenges. The goal is to provide a platform that is continually evolving and making a positive impact.",
     "Does Nayak have specific success stories?": "While Nayak doesn't have specific success stories, its focus is on creating positive outcomes for individuals facing societal challenges. Your feedback and experiences contribute to the ongoing improvement of the platform.",
@@ -28,14 +28,12 @@ qa_data = {
 
 
 
-
-def display_questions(questions):
-    random.shuffle(questions)
-    selected_indices = []
-    for i, question in enumerate(questions, start=1):
-        if st.checkbox(f"{i}. {question}"):
+selected_indices = []
+for i, question in enumerate(data, start=1):
+        st.write(f"{i}. {question}")
+        checkbox_value = st.checkbox(f"Select this question")
+        if checkbox_value:
             selected_indices.append(i)
-    return selected_indices
 
 def main():
     all_questions = list(qa_data.keys())
