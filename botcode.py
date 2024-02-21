@@ -100,6 +100,7 @@ if user_input:
     else:
         st.write("Bot: {}".format(answers[prediction - 1]))
 
-# Add a button to restart the interaction
 if st.button("Restart Interaction"):
-    st.text_input("You: ")
+    # Set a unique key for the second text_input widget
+    restart_input_key = "restart_input_key"
+    st.text_input("You: ", key=restart_input_key)
