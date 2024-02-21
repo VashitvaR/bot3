@@ -169,8 +169,9 @@ def chat_bow(question):
 # TF-IDF
 tfidf = TfidfVectorizer()
 x_tfidf = tfidf.fit_transform(df_nayak['question']).toarray()
-features_tfidf = tfidf.get_feature_names_out()
+features_tfidf = tfidf.get_feature_names()
 df_tfidf = pd.DataFrame(x_tfidf, columns=features_tfidf)
+
 
 def chat_tfidf(question):
     tidy_question = question.lower()
