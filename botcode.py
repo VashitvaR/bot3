@@ -179,7 +179,6 @@ updated_data = data + additional_data
 # Update df_nayak with the new dataset
 df_nayak = pd.DataFrame(updated_data)
 
-
 # Load the BERT model and tokenizer
 with st.sidebar:
     st.markdown('<h1 style="color:blue;">🛡️ Welcome to Shield Bot by Nayak! 🤖</h1>', unsafe_allow_html=True)
@@ -201,8 +200,9 @@ with st.sidebar:
     - Authorized external parties can retrieve pertinent information through the API, contributing to insights generation.
     
 
-    💡 Note: The  Bot is an integral component of Nayak, augmenting the platform's capabilities and enhancing user experience.
+    💡 Note: The Bot is an integral component of Nayak, augmenting the platform's capabilities and enhancing user experience.
     ''')
+
 st.markdown('<style>div.stNamedPlaceholder>div{margin-top:20px;}</style>', unsafe_allow_html=True)
 
 # Bag of Words (BOW)
@@ -214,6 +214,7 @@ def handle_greetings_goodbyes(user_input):
         return "Goodbye! If you have more questions, feel free to return anytime."
     else:
         return None  # Return None if it's not a greeting or goodbye
+
 cv = CountVectorizer()
 x_bow = cv.fit_transform(df_nayak['question']).toarray()
 features_bow = cv.get_feature_names()
@@ -224,7 +225,7 @@ def chat_bow(question):
     cv_ = cv.transform([tidy_question]).toarray()
     cos = 1 - pairwise_distances(df_bow, cv_, metric='cosine')
     index_value = cos.argmax()
-    
+
     return df_nayak['answer'].loc[index_value]
 
 # TF-IDF
@@ -233,13 +234,12 @@ x_tfidf = tfidf.fit_transform(df_nayak['question']).toarray()
 features_tfidf = tfidf.get_feature_names()
 df_tfidf = pd.DataFrame(x_tfidf, columns=features_tfidf)
 
-
 def chat_tfidf(question):
     tidy_question = question.lower()
     tf = tfidf.transform([tidy_question]).toarray()
     cos = 1 - pairwise_distances(df_tfidf, tf, metric='cosine')
     index_value = cos.argmax()
-    
+
     return df_nayak['answer'].loc[index_value]
 
 # Streamlit App
@@ -248,10 +248,10 @@ def main():
 
     # User input
     user_input_question = st.text_input("Ask Nayak a question:")
-    
+
     # Method selection
     method = st.radio("Select Chatbot Method:", ['Bag of Words (BOW)', 'TF-IDF'])
-    
+
     # Chatbot response
     if st.button("Get Nayak's Answer"):
         if method == 'Bag of Words (BOW)':
@@ -266,8 +266,6 @@ def main():
             response = "I'm sorry, I didn't understand that. Please try asking in a different way or provide more details."
 
         st.text_area("Nayak's Response:", response)
-        
+
 if __name__ == "__main__":
     main()
-
-
