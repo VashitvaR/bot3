@@ -260,6 +260,7 @@ def main():
             response = "Select a valid method."
 
         st.text_area("Nayak's Response:", response)
-
+    if response is None:
+        response = "I'm sorry, I didn't understand that. Please try asking in a different way or provide more details."
 if __name__ == "__main__":
     main()
