@@ -28,7 +28,9 @@ qa_data = {
 
 
 
+
 def display_questions(questions):
+    random.shuffle(questions)
     selected_indices = []
     for i, question in enumerate(questions, start=1):
         if st.checkbox(f"{i}. {question}"):
@@ -38,8 +40,11 @@ def display_questions(questions):
 def main():
     all_questions = list(qa_data.keys())
     
-    # Randomly select 5 questions for the user to choose from
-    random_questions = random.sample(all_questions, 5)
+    # Randomly shuffle all questions
+    random.shuffle(all_questions)
+
+    # Select the first 5 questions for the user to choose from
+    random_questions = all_questions[:5]
 
     st.title("Select Questions to Display")
     selected_indices = display_questions(random_questions)
