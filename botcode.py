@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from langdetect import detect
+import langid
 from deep_translator import GoogleTranslator
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.metrics import pairwise_distances
@@ -268,24 +268,31 @@ def chat_tfidf(question):
 
         st.text_area("Nayak's Response:", response)
         
+
+
+
 def detect_language(text):
-    try:
-        lang = detect(text)
-    except:
-        lang = 'en'  # Default to English if language detection fails
+    lang, confidence = langid.classify(text)
     return lang
+
+# ... (rest of your code)
 
 def main():
     st.title("Nayak Chatbot")
 
     # User input
     user_input_question = st.text_input("Ask Nayak a question:")
-    
+
+    # Detect language
+    detected_language = detect_language(user_input_question)
+
+    # Translate to English if not already in English
+    if detected_language != 'en':
+        engtext = GoogleTranslator(source=detected_language, target='en').translate(user_input_question)
+        user_input_question = engtext
+
     # Method selection
     method = st.radio("Select Chatbot Method:", ['Bag of Words (BOW)', 'TF-IDF'])
-    
-    # Detect user input language
-    user_input_language = detect_language(user_input_question)
     
     # Chatbot response
     if st.button("Get Nayak's Answer"):
@@ -300,8 +307,7 @@ def main():
         if response is None:
             response = "I'm sorry, I didn't understand that. Please try asking in a different way or provide more details."
 
-        # Translate response to the detected language
-        translated_response = GoogleTranslator(target=user_input_language).translate(response)
-   
+        st.text_area("Nayak's Response:", response)
+
 if __name__ == "__main__":
     main()
