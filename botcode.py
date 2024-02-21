@@ -1,106 +1,52 @@
-import streamlit as st
-import torch
-from transformers import BertTokenizer, BertForQuestionAnswering
+import random
 
-# Load the BERT model and tokenizer
-with st.sidebar:
-    st.markdown('<h1 style="color:blue;">🛡️ Welcome to Shield Bot by Nayak! 🤖</h1>', unsafe_allow_html=True)
-    st.header('About Nayak')
+qa_data = {
+    "How is Nayak always looking to improve and enhance its features?": "Nayak is always looking for ways to improve and enhance its features. If you have any suggestions or specific areas you'd like to see improvements, feel free to share them with us!",
+    "What is Nayak's approach to addressing societal challenges?": "Nayak integrates artificial intelligence to contribute to its effectiveness in addressing societal challenges. The goal is to provide a platform that is continually evolving and making a positive impact.",
+    "Does Nayak have specific success stories?": "While Nayak doesn't have specific success stories, its focus is on creating positive outcomes for individuals facing societal challenges. Your feedback and experiences contribute to the ongoing improvement of the platform.",
+    "What are Nayak's goals in addressing abuse, fraud, and danger?": "Nayak aims to influence policy changes and raise awareness about abuse, fraud, and danger. By connecting victims with authorities, the platform seeks to address conflicts and empower those affected.",
+    "How does Nayak address challenges or barriers?": "Nayak acknowledges there may be challenges or barriers. If you have faced any difficulties using the platform, we'd like to hear more about your experiences to make necessary improvements.",
+    "How can individuals contribute to building a supportive community using Nayak?": "If you've found success using Nayak, recommending the platform to others facing similar challenges can help build a supportive community and amplify its impact.",
+    "How does Nayak encourage collaboration with support systems and authorities?": "Nayak encourages collaboration with existing support systems and authorities to create a comprehensive solution. Together, we can work towards a safer and more supportive environment.",
+    "What role does Nayak play in supporting individuals, communities, and governments?": "Nayak plays a crucial role in supporting individuals, communities, and governments. By promoting collaboration and providing valuable insights, the platform aims to make a positive impact in addressing societal challenges.",
+    "How does Nayak aim to foster a sense of community and solidarity?": "Nayak strives to foster a sense of community and solidarity among individuals facing societal challenges. Your participation and engagement contribute to creating a supportive environment.",
+    "In what way is Nayak open to feedback for continuous improvement?": "Nayak is open to feedback on how it can better address specific challenges and empower victims. Your insights and suggestions play a vital role in the continuous improvement of the platform.",
+    "How does Nayak ensure user privacy and data security?": "Nayak prioritizes user privacy and data security by implementing robust encryption measures and adhering to strict data protection protocols. Our commitment is to ensure that user information is handled with the utmost care and in compliance with privacy regulations.",
+    "Can users customize their experience on Nayak based on their specific needs and preferences?": "Yes, Nayak provides users with the ability to customize their experience based on individual needs and preferences. Personalization features allow users to tailor the platform to better suit their requirements and address specific challenges they may be facing.",
+    "What measures does Nayak take to prevent and address misinformation on its platform?": "Nayak employs advanced algorithms and fact-checking mechanisms to identify and mitigate misinformation on the platform. Additionally, users are encouraged to report any content that raises concerns, enabling prompt action to address and rectify such instances.",
+    "How does Nayak collaborate with experts and organizations to stay informed about evolving societal challenges?": "Nayak actively collaborates with experts, organizations, and researchers to stay informed about evolving societal challenges. This collaborative approach ensures that the platform remains at the forefront of addressing emerging issues effectively.",
+    "Are there any plans for Nayak to expand its services or features in the future?": "Nayak is committed to continuous improvement and innovation. While specific plans for expansion are proprietary, the platform regularly evaluates opportunities to enhance its services and features to better serve its users.",
+    "How does Nayak empower users to take proactive steps in addressing societal issues?": "Nayak empowers users by providing tools and resources to take proactive steps in addressing societal issues. This includes educational content, collaboration opportunities, and the ability to connect with support systems and authorities.",
+    "Can users connect with each other on Nayak to share experiences and support one another?": "Yes, Nayak facilitates user connections to encourage the sharing of experiences and mutual support. Building a community of individuals facing similar challenges fosters a supportive environment and amplifies the impact of collective efforts.",
+    "What steps does Nayak take to ensure accessibility for users with diverse needs?": "Nayak is designed with accessibility in mind, incorporating features to accommodate users with diverse needs. This includes options for customizable interfaces, assistive technologies, and adherence to accessibility standards.",
+    "How does Nayak handle reports of abuse or misuse of its platform?": "Nayak takes reports of abuse or misuse seriously. The platform has established protocols to investigate and address such reports promptly. Users are encouraged to report any instances of misuse to contribute to a safer online environment.",
+    "Are there educational resources or guides available on Nayak to help users navigate the platform effectively?": "Yes, Nayak provides educational resources and guides to help users navigate the platform effectively. These resources cover various aspects, including how to use features, engage with the community, and access support when needed."
+}
 
-    st.markdown('''
-    ## Empowering Reporting and Insights
 
-    Nayak is a cutting-edge reporting and insights platform designed to empower individuals, particularly victims, to file reports openly or anonymously. The platform is committed to user convenience and offers morning and night modes.
 
-    🚀 Once a report is submitted, Nayak provides authorized authorities with a comprehensive dashboard. Reports are intelligently categorized into open, in-progress, and closed statuses, ensuring efficient case management.
 
-    ### AI-Powered Efficiency
-    - Nayak seamlessly integrates AI to manage the influx of reports effectively.
-    - The AI is adept at generating precise answers to specific questions posed by authorities, streamlining the information processing workflow.
-
-    ### API Gateway for Data Insights
-    - Nayak offers an API gateway, allowing authorities to access valuable data stored within the platform's databases.
-    - Authorized external parties can retrieve pertinent information through the API, contributing to insights generation.
+def main():
+    all_questions = list(qa_data.keys())
     
+    # Randomly select 5 questions for the user to choose from
+    random_questions = random.sample(all_questions, 5)
 
-    💡 Note: The  Bot is an integral component of Nayak, augmenting the platform's capabilities and enhancing user experience.
-    ''')
-st.markdown('<style>div.stNamedPlaceholder>div{margin-top:20px;}</style>', unsafe_allow_html=True)
+    print("Please mark questions to display by ticking the corresponding numbers:")
+    display_questions(random_questions)
 
-# Define your data
-data = [
-    ("How is Nayak always looking to improve and enhance its features?", "Nayak is always looking for ways to improve and enhance its features. If you have any suggestions or specific areas you'd like to see improvements, feel free to share them with us!"),
-    ("What is Nayak's approach to addressing societal challenges?", "Nayak integrates artificial intelligence to contribute to its effectiveness in addressing societal challenges. The goal is to provide a platform that is continually evolving and making a positive impact."),
-    ("Does Nayak have specific success stories?", "While Nayak doesn't have specific success stories, its focus is on creating positive outcomes for individuals facing societal challenges. Your feedback and experiences contribute to the ongoing improvement of the platform."),
-    ("What are Nayak's goals in addressing abuse, fraud, and danger?", "Nayak aims to influence policy changes and raise awareness about abuse, fraud, and danger. By connecting victims with authorities, the platform seeks to address conflicts and empower those affected."),
-    ("How does Nayak address challenges or barriers?", "Nayak acknowledges there may be challenges or barriers. If you have faced any difficulties using the platform, we'd like to hear more about your experiences to make necessary improvements."),
-    ("How can individuals contribute to building a supportive community using Nayak?", "If you've found success using Nayak, recommending the platform to others facing similar challenges can help build a supportive community and amplify its impact."),
-    ("How does Nayak encourage collaboration with support systems and authorities?", "Nayak encourages collaboration with existing support systems and authorities to create a comprehensive solution. Together, we can work towards a safer and more supportive environment."),
-    ("What role does Nayak play in supporting individuals, communities, and governments?", "Nayak plays a crucial role in supporting individuals, communities, and governments. By promoting collaboration and providing valuable insights, the platform aims to make a positive impact in addressing societal challenges."),
-    ("How does Nayak aim to foster a sense of community and solidarity?", "Nayak strives to foster a sense of community and solidarity among individuals facing societal challenges. Your participation and engagement contribute to creating a supportive environment."),
-    ("In what way is Nayak open to feedback for continuous improvement?", "Nayak is open to feedback on how it can better address specific challenges and empower victims. Your insights and suggestions play a vital role in the continuous improvement of the platform.")
-]
+    # Get user input for marked questions
+    marked_indices = input("Enter the numbers of the questions to display (e.g., 1 3 5): ")
+    marked_indices = [int(index) for index in marked_indices.split() if index.isdigit()]
 
-questions = [item[0] for item in data]
-answers = [item[1] for item in data]
+    # Display the marked questions and their answers
+    for index in marked_indices:
+        if 1 <= index <= len(random_questions):
+            selected_question = random_questions[index - 1]
+            print("\nQuestion:", selected_question)
+            print("Answer:", qa_data[selected_question])
+        else:
+            print(f"Invalid index: {index}. Please enter a valid number.")
 
-# Convert the data to input format for BERT
-question_input_ids = []
-question_attention_masks = []
-tokenizer = BertTokenizer.from_pretrained('deepset/bert-base-cased-squad2')
-model = BertForQuestionAnswering.from_pretrained('deepset/bert-base-cased-squad2')
-
-# Set the device
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-# Function to get model output
-def get_model_output(user_input):
-    max_length = 512
-    # Tokenize the user input
-    input_tokens = tokenizer.tokenize(user_input)
-
-    # Pad the input tokens
-    input_tokens = input_tokens + [tokenizer.pad_token] * (max_length - len(input_tokens))
-
-    # Convert the input tokens to input ids
-    input_ids = tokenizer.convert_tokens_to_ids(input_tokens)
-
-    # Create the attention mask for the input
-    attention_mask = [1 if token != tokenizer.pad_token else 0 for token in input_tokens]
-
-    # Convert the input ids and attention mask to tensors
-    input_ids = torch.tensor(input_ids).unsqueeze(0).to(device)
-    attention_mask = torch.tensor(attention_mask).unsqueeze(0).to(device)
-
-    # Get the model output
-    output = model(input_ids, attention_mask=attention_mask)
-
-    # Get the predicted label
-    prediction = output[0].argmax(dim=1).item()
-
-    return prediction
-
-# Streamlit app
-st.title("Nayak QA System")
-
-# Greeting message
-st.write("Bot: Hello! I'm Shield Bot by Nayak. How can I assist you today?")
-
-# Take input from the user
-user_input = st.text_input("You: ")
-
-# Check if the user has entered any text
-if user_input:
-    # Get the model output
-    prediction = get_model_output(user_input)
-
-    # Print the output
-    if prediction == 0:
-        st.write("Bot: I see that you asked a question: '{}'".format(user_input))
-    else:
-        st.write("Bot: {}".format(answers[prediction - 1]))
-
-if st.button("Restart Interaction"):
-    # Set a unique key for the second text_input widget
-    restart_input_key = "restart_input_key"
-    st.text_input("You: ", key=restart_input_key)
+if __name__ == "__main__":
+    main()
