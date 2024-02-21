@@ -4,7 +4,7 @@ from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.metrics import pairwise_distances
 
 # Nayak-related data
-[
+data=[
   {
     "question": "How is Nayak always looking to improve and enhance its features?",
     "answer": "Nayak is always looking for ways to improve and enhance its features. If you have any suggestions or specific areas you'd like to see improvements, feel free to share them with us!"
