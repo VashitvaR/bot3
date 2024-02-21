@@ -151,13 +151,12 @@ data=[
   }
 ]
 
-# Create a DataFrame
 df_nayak = pd.DataFrame(data)
 
 # Bag of Words (BOW)
 cv = CountVectorizer()
 x_bow = cv.fit_transform(df_nayak['question']).toarray()
-features_bow = cv.get_feature_names_out()
+features_bow = cv.get_feature_names()
 df_bow = pd.DataFrame(x_bow, columns=features_bow)
 
 def chat_bow(question):
