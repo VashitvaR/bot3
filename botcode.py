@@ -1,3 +1,4 @@
+import streamlit as st
 import random
 
 qa_data = {
@@ -24,9 +25,10 @@ qa_data = {
 }
 
 
+
 def display_questions(questions):
     for i, question in enumerate(questions, start=1):
-        print(f"[ ] {i}. {question}")
+        st.checkbox(f"{i}. {question}")
 
 def main():
     all_questions = list(qa_data.keys())
@@ -34,21 +36,17 @@ def main():
     # Randomly select 5 questions for the user to choose from
     random_questions = random.sample(all_questions, 5)
 
-    print("Please mark questions to display by ticking the corresponding numbers:")
+    st.title("Select Questions to Display")
     display_questions(random_questions)
 
-    # Get user input for marked questions
-    marked_indices = input("Enter the numbers of the questions to display (e.g., 1 3 5): ")
-    marked_indices = [int(index) for index in marked_indices.split() if index.isdigit()]
-
-    # Display the marked questions and their answers
-    for index in marked_indices:
-        if 1 <= index <= len(random_questions):
-            selected_question = random_questions[index - 1]
-            print("\nQuestion:", selected_question)
-            print("Answer:", qa_data[selected_question])
-        else:
-            print(f"Invalid index: {index}. Please enter a valid number.")
+    # Get user input for marked questions using checkboxes
+    selected_indices = [index for index, question in enumerate(random_questions, start=1) if st.checkbox(f"{index}. {question}")]
+    
+    # Display the selected questions and their answers
+    for index in selected_indices:
+        selected_question = random_questions[index - 1]
+        st.write("\nQuestion:", selected_question)
+        st.write("Answer:", qa_data[selected_question])
 
 if __name__ == "__main__":
     main()
