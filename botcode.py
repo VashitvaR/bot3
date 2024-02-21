@@ -24,7 +24,9 @@ qa_data = {
 }
 
 
-
+def display_questions(questions):
+    for i, question in enumerate(questions, start=1):
+        print(f"[ ] {i}. {question}")
 
 def main():
     all_questions = list(qa_data.keys())
