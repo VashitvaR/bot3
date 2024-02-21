@@ -206,6 +206,14 @@ with st.sidebar:
 st.markdown('<style>div.stNamedPlaceholder>div{margin-top:20px;}</style>', unsafe_allow_html=True)
 
 # Bag of Words (BOW)
+def handle_greetings_goodbyes(user_input):
+    user_input = user_input.lower()
+    if user_input in ["hello", "hi", "good morning"]:
+        return "Hello! How can Nayak assist you today?"
+    elif user_input in ["goodbye", "bye"]:
+        return "Goodbye! If you have more questions, feel free to return anytime."
+    else:
+        return None  # Return None if it's not a greeting or goodbye
 cv = CountVectorizer()
 x_bow = cv.fit_transform(df_nayak['question']).toarray()
 features_bow = cv.get_feature_names()
