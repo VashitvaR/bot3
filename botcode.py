@@ -266,8 +266,8 @@ def main():
             response = "I'm sorry, I didn't understand that. Please try asking in a different way or provide more details."
 
         st.text_area("Nayak's Response:", response)
+        
 if __name__ == "__main__":
     main()
-
 
 
