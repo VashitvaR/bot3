@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
-
+from langdetect import detect
+from deep_translator import GoogleTranslator
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.metrics import pairwise_distances
 
@@ -243,7 +244,7 @@ def chat_tfidf(question):
     return df_nayak['answer'].loc[index_value]
 
 # Streamlit App
-def main():
+#def main():
     st.title("Nayak Chatbot")
 
     # User input
@@ -266,6 +267,41 @@ def main():
             response = "I'm sorry, I didn't understand that. Please try asking in a different way or provide more details."
 
         st.text_area("Nayak's Response:", response)
+        
+def detect_language(text):
+    try:
+        lang = detect(text)
+    except:
+        lang = 'en'  # Default to English if language detection fails
+    return lang
+
+def main():
+    st.title("Nayak Chatbot")
+
+    # User input
+    user_input_question = st.text_input("Ask Nayak a question:")
+    
+    # Method selection
+    method = st.radio("Select Chatbot Method:", ['Bag of Words (BOW)', 'TF-IDF'])
+    
+    # Detect user input language
+    user_input_language = detect_language(user_input_question)
+    
+    # Chatbot response
+    if st.button("Get Nayak's Answer"):
+        if method == 'Bag of Words (BOW)':
+            response = chat_bow(user_input_question)
+        elif method == 'TF-IDF':
+            response = chat_tfidf(user_input_question)
+        else:
+            response = "Select a valid method."
+
+        # Default response if no match is found
+        if response is None:
+            response = "I'm sorry, I didn't understand that. Please try asking in a different way or provide more details."
+
+        # Translate response to the detected language
+        translated_response = GoogleTranslator(target=user_input_language).translate(response)
    
 if __name__ == "__main__":
     main()
