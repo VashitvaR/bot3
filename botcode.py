@@ -47,6 +47,8 @@ def main():
         selected_question = all_questions[index - 1]
         st.write(f"{index}. {selected_question}")
         st.write("Answer:", data[selected_question])
+        st.write("")  # Add an empty line for separation
 
 if __name__ == "__main__":
     main()
+
